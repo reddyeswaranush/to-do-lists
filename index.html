@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #5cb85c;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      width: 100%;
+    }
+
+    .input-section, .tasks-section {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .input-section {
+      background-color: #ffffff;
+      border-right: 2px solid #ddd;
+    }
+
+    .tasks-section {
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .todo-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .todo-form input {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .todo-form button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .todo-form button:hover {
+      background-color: #4cae4c;
+    }
+
+    .tasks-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .tasks-section ul li {
+      background: #fff;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .tasks-section ul li button {
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .complete-btn {
+      background-color: #5bc0de;
+      color: white;
+    }
+
+    .complete-btn:hover {
+      background-color: #31b0d5;
+    }
+
+    .delete-btn {
+      background-color: #d9534f;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #c9302c;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: #999999;
+    }
+  </style>
+</head>
+<body>
+  <header>To-Do List</header>
+
+  <div class="container">
+    <div class="input-section">
+      <h1>Add Task</h1>
+      <form class="todo-form">
+        <input type="text" id="todo-input" placeholder="Enter a new task..." />
+        <button type="button" id="add-task-btn">Add Task</button>
+      </form>
+    </div>
+
+    <div class="tasks-section">
+      <h1>Your Tasks</h1>
+      <ul id="todo-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    const todoInput = document.getElementById('todo-input');
+    const addTaskBtn = document.getElementById('add-task-btn');
+    const todoList = document.getElementById('todo-list');
+
+    addTaskBtn.addEventListener('click', addTask);
+
+    function addTask() {
+      const taskText = todoInput.value.trim();
+      if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span>${taskText}</span>
+        <div>
+          <button class="complete-btn">Complete</button>
+          <button class="delete-btn">Delete</button>
+        </div>
+      `;
+
+      li.querySelector('.complete-btn').addEventListener('click', () => {
+        li.querySelector('span').classList.toggle('completed');
+      });
+
+      li.querySelector('.delete-btn').addEventListener('click', () => {
+        todoList.removeChild(li);
+      });
+
+      todoList.appendChild(li);
+
+      todoInput.value = '';
+    }
+  </script>
+</body>
+</html>
